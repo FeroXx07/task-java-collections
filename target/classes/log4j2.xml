@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="https://logging.apache.org/xml/ns"
+               xsi:schemaLocation="
+                       https://logging.apache.org/xml/ns
+                       https://logging.apache.org/xml/ns/log4j-config-2.xsd">
+
+
+    <Appenders>
+        <Console name="CONSOLE">
+            <PatternLayout pattern="%d{HH:mm:ss} %-5level - %msg%n"/>
+        </Console>
+        <File name="FILE" fileName="logs/app.log">
+        <JsonTemplateLayout/>
+    </File>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="FILE" level="WARN"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
