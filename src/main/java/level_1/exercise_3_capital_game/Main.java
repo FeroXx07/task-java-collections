@@ -86,7 +86,7 @@ public class Main {
         LOGGER.info("Your score is: {}", finalScore);
         String name = ScannerUtility.fetchStringInput("Please enter your name: ");
         String toSave = name + " " + finalScore;
-        try (FileWriter fw = new FileWriter(outputFileNameClassification);
+        try (FileWriter fw = new FileWriter(outputFileNameClassification, true);
              BufferedWriter bw = new BufferedWriter(fw) ) {
             bw.newLine();
             bw.write(toSave);
