@@ -4,10 +4,7 @@ import level_3.gestor_persones.Comparator.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class DniService {
@@ -48,15 +45,21 @@ public class DniService {
     }
 
     private void saveData(){
-
+        try (FileWriter fw = new FileWriter(dataFilePath);
+             BufferedWriter bw = new BufferedWriter(fw) ) {
+            for (Persona persona : dataSet) {
+                String line = persona.getName() + "," + persona.getSurname() + "," + persona.getDni();
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void loadData(){
         try(FileReader fr = new FileReader(dataFilePath);
             BufferedReader br = new BufferedReader(fr)){
-
-            // Skip header or column lines of the csv
-            br.readLine();
 
             String line;
             while ((line = br.readLine()) != null) {
