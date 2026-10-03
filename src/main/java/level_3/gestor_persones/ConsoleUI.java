@@ -68,8 +68,11 @@ public class ConsoleUI {
     private void handleShowBy(Sorting sorting) {
         List<Persona> data = dniService.getDataSortedBy(sorting);
         LOGGER.info("There are {} people in the data", data.size());
-        for (Persona persona : data) {
-            LOGGER.info(persona.toString());
+        String headerSpace = "          ";
+        String columnSpace = "          ";
+        LOGGER.info("___NOM___{}___COGNOMS___{}___NIF___", headerSpace, headerSpace);
+        for (Persona person : data) {
+            LOGGER.info("{}{}{}{}{}", person.getName(), columnSpace, person.getSurname(), columnSpace, person.getDni());
         }
     }
 
