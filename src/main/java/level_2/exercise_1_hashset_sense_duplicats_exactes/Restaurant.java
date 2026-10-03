@@ -2,13 +2,22 @@ package level_2.exercise_1_hashset_sense_duplicats_exactes;
 
 import java.util.Objects;
 
-public class Restaurant {
+public class Restaurant implements Comparable<Restaurant>{
     private final String name;
     private final float rating;
 
     public Restaurant(String name, float rating) {
         this.name = name;
         this.rating = rating;
+    }
+
+    public float getRating() { return rating; }
+    public String getName() { return name; }
+    @Override
+    public int compareTo(Restaurant o) {
+        // Sort by name in alphabetical order
+//        return this.name.compareTo(o.name);
+        return o.name.compareTo(this.name);
     }
 
     @Override
