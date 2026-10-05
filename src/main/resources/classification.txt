@@ -2,3 +2,5 @@
 alii 0
 alii 0
 juan 0
+s 1
+3 0

@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="task-java-collections" />
+        <module name="task-exceptions" />
       </profile>
     </annotationProcessing>
   </component>
