@@ -4,11 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.ScannerUtility;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
@@ -17,11 +13,13 @@ public class Game {
     private GameSerializer gameSerializer;
 
     private Map<String, String> dataMap;
+    private Set<String> usedCountries;
     private final int gameRounds = 10;
 
     public Game() {
         gameSerializer = new GameSerializer();
         dataMap = new HashMap<>();
+        usedCountries = new HashSet<>();
     }
 
     public void init()
@@ -66,7 +64,7 @@ public class Game {
     }
 
     private int playRound(){
-        String country = getRandomCountry();
+        String country = getRandomCountryCurated();
         LOGGER.info("What is capital of {} ? (case-sensitive)", country);
         String answer = ScannerUtility.fetchStringInput("Your answer: ");
         String capital = getCapitalOf(country);
@@ -80,7 +78,15 @@ public class Game {
         return 0;
     }
 
-    private String getRandomCountry() {
+    private String getRandomCountryCurated() {
+        String attempt = getRandomFromList();
+        while (usedCountries.contains(attempt)) {
+            attempt = getRandomFromList();
+        }
+        return attempt;
+    }
+
+    private String getRandomFromList(){
         List<String> countries = new ArrayList<>(dataMap.keySet());
         return countries.get(ThreadLocalRandom.current().nextInt(countries.size()));
     }
