@@ -8,24 +8,24 @@ import java.util.List;
 
 public class ConsoleUI {
     private static final Logger LOGGER = LogManager.getLogger();
-    private DniService dniService;
+    private PersonService personService;
 
-    public ConsoleUI(DniService dniService) {
-        if (dniService == null) {
+    public ConsoleUI(PersonService personService) {
+        if (personService == null) {
             throw new IllegalArgumentException("ReservationService cannot be null");
         }
-        this.dniService = dniService;
+        this.personService = personService;
     }
 
     public void Start(){
-        dniService.init();
+        personService.init();
         boolean exit = false;
         do {
             try {
                 switch (inputMainMenu()){
                     case 0:{
                         LOGGER.info("Thanks for using our application!");
-                        dniService.shutdown();
+                        personService.shutdown();
                         exit = true;
                         break;
                     }
@@ -62,11 +62,11 @@ public class ConsoleUI {
         String name = ScannerUtility.fetchStringInput("Enter the name of the person: ");
         String Surname = ScannerUtility.fetchStringInput("Enter the surname of the person: ");
         String dni = ScannerUtility.fetchStringInput("Enter the DNI of the person: ");
-        dniService.addPerson(name, Surname, dni);
+        personService.addPerson(name, Surname, dni);
     }
 
     private void handleShowBy(Sorting sorting) {
-        List<Persona> data = dniService.getDataSortedBy(sorting);
+        List<Persona> data = personService.getDataSortedBy(sorting);
         LOGGER.info("There are {} people in the data", data.size());
         String headerSpace = "          ";
         String columnSpace = "          ";

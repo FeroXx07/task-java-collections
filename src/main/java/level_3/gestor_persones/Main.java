@@ -8,8 +8,9 @@ public class Main {
     void main(String[] args) {
         LOGGER.info("Init Program");
         try {
-            DniService dniService = new DniService();
-            ConsoleUI consoleUI = new ConsoleUI(dniService);
+            PersonPersistence personPersistence = new PersonPersistence();
+            PersonService personService = new PersonService(personPersistence);
+            ConsoleUI consoleUI = new ConsoleUI(personService);
             consoleUI.Start();
         }catch (Exception e) {
             LOGGER.fatal("A fatal exception occurred. {}, {}", e.getClass().getSimpleName(), e.getMessage());

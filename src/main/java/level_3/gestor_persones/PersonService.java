@@ -4,17 +4,17 @@ import level_3.gestor_persones.Comparator.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
 import java.util.*;
 
-public class DniService {
+public class PersonService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final String dataFilePath = "src/main/resources/people.csv";
     private final Map<Sorting, Comparator<Persona>> sortingComparatorMap;
+    private PersonPersistence persistence;
     private Set<Persona> dataSet;
 
-    public DniService() {
+    public PersonService(PersonPersistence personPersistence) {
         dataSet = new HashSet<Persona>();
+        persistence = personPersistence;
 
         sortingComparatorMap = new HashMap<Sorting, Comparator<Persona>>();
         sortingComparatorMap.put(Sorting.NAME_ASC, new NameCompareAsc());
@@ -37,44 +37,12 @@ public class DniService {
     }
 
     public void init(){
-        loadData();
+        dataSet = persistence.loadData();
     }
     public void shutdown(){
-        saveData();
+        persistence.saveData(dataSet);
         dataSet.clear();
     }
 
-    private void saveData(){
-        try (FileWriter fw = new FileWriter(dataFilePath);
-             BufferedWriter bw = new BufferedWriter(fw) ) {
-            for (Persona persona : dataSet) {
-                String line = persona.getName() + "," + persona.getSurname() + "," + persona.getDni();
-                bw.write(line);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    private void loadData(){
-        try(FileReader fr = new FileReader(dataFilePath);
-            BufferedReader br = new BufferedReader(fr)){
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] splitLine = line.split(",");
-                if (splitLine.length == 3) {
-                    String name = splitLine[0];
-                    String surname = splitLine[1];
-                    String dni = splitLine[2];
-                    addPerson(name, surname, dni);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            LOGGER.error("File not found!", e);
-        } catch (IOException e) {
-            LOGGER.error("Error reading a file", e);
-        }
-    }
 }

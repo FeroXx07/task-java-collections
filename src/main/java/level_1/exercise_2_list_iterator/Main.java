@@ -17,11 +17,11 @@ public class Main {
             list.add(i);
         }
 
-        List<Integer> reverseList = new ArrayList<>(list.reversed());
+        List<Integer> reverseList = new ArrayList<>(list.size());
 
-        ListIterator<Integer> listIterator = list.listIterator();
-        while (listIterator.hasNext()) {
-            reverseList.add(listIterator.next());
+        ListIterator<Integer> listIterator = list.listIterator(list.size());
+        while (listIterator.hasPrevious()) {
+            reverseList.add(listIterator.previous());
         }
 
         LOGGER.info(reverseList);

@@ -32,6 +32,7 @@ public class Main {
         set.add(new Month("January"));
         set.add(new Month("February"));
 
+        LOGGER.info("The following is a HashSet collection after two duplicates addition attempts.");
         for (Month month : list) {
             LOGGER.info(month);
         }
